@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Container,
+  CssBaseline,
   Drawer,
   IconButton,
   Link,
@@ -140,6 +141,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Box className={`app-root ${mode}`}>
         <Box className="ambient ambient-one" />
         <Box className="ambient ambient-two" />
@@ -149,7 +151,7 @@ export default function App() {
           <Container maxWidth="xl">
             <Toolbar disableGutters className="toolbar-shell">
               <Typography component="button" type="button" onClick={() => navigate("/")} className="brand-mark brand-button">
-                Abhay Raj Dwivedi
+                My Portfolio
               </Typography>
               <Stack direction="row" spacing={0.5} alignItems="center" className="desktop-nav">
                 {navItems}
@@ -232,7 +234,7 @@ export default function App() {
 
         <Box component="footer" className="footer-bar">
           <Typography>
-            {`(c) 2026 ${personalInfo.name}. React portfolio rebuilt with a more editorial, design-led interface.`}
+              {`(c) 2026 ${personalInfo.name}.`}
           </Typography>
         </Box>
       </Box>

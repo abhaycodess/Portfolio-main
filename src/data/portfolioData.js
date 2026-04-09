@@ -72,32 +72,32 @@ export const strengths = [
 ];
 
 export const featuredProject = {
-  title: "Aegis-Cloud",
+  title: "Naagrik",
   eyebrow: "Featured Project",
-  subtitle: "Cloud Storage and File Management Platform",
+  subtitle: "Civic Issue Reporting and Citizen Engagement Platform",
   description:
-    "Aegis-Cloud is a cloud-based storage platform built with React and TypeScript, featuring secure authentication, real-time file synchronization, and a clean responsive interface powered by Supabase services.",
-  stack: ["React", "TypeScript", "TailwindCSS", "Supabase", "Material UI"],
+    "Naagrik is a civic issue reporting platform that helps citizens raise local problems, upload evidence, and track progress with clear public visibility and accountability workflows.",
+  stack: ["React", "Vite", "TailwindCSS", "Firebase Auth", "Firestore", "Firebase Storage"],
   details: [
     {
       label: "Key Features",
-      value: "File upload and download, real-time sync, authentication, cloud storage, responsive workflows"
+      value: "Issue reporting with images and location, draft and live publishing, dashboard tracking, profile verification, moderation-ready workflows"
     },
     {
       label: "Technologies",
-      value: "React 18, TypeScript, Vite, TailwindCSS, Material UI, Supabase, routing"
+      value: "React 18, Vite, TailwindCSS, React Router, Firebase Authentication, Firestore, Firebase Storage"
     }
   ],
-  link: "https://github.com/abhaycodess/4th-Year-Project"
+  link: "https://github.com/abhaycodess/-Major-Project"
 };
 
 export const projects = [
   {
-    title: "Cloud Storage and File Management",
+    title: "Naagrik",
     description:
-      "Aegis-Cloud is a comprehensive cloud-based storage platform built with React and TypeScript, featuring real-time file synchronization, secure authentication, and a modern responsive interface.",
-    tech: ["React", "TypeScript", "Supabase", "TailwindCSS", "Material UI"],
-    link: "https://github.com/abhaycodess/4th-Year-Project",
+      "A civic issue reporting platform enabling citizens to raise and track local problems with transparency, verification-aware publishing, and public dashboard visibility.",
+    tech: ["React", "Vite", "TailwindCSS", "Firebase Auth", "Firestore", "Firebase Storage"],
+    link: "https://github.com/abhaycodess/-Major-Project",
     category: "Full Stack"
   },
   {
@@ -170,7 +170,7 @@ const photoTitles = [
   "Essence Captured",
   "Vibrant Colors",
   "Nature's Canvas",
-  "Scenic View",
+  "Open Horizon",
   "Perfect Moment"
 ];
 

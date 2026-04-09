@@ -21,13 +21,9 @@ import {
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  Camera,
-  ChevronLeft,
-  ChevronRight,
   Copy,
   ExternalLink,
   Github,
-  Image as ImageIcon,
   Linkedin,
   Mail,
   MapPin,
@@ -45,6 +41,8 @@ import {
   strengths,
   techGroups
 } from "../data/portfolioData";
+import PhotoCarousel from "../components/PhotoCarousel";
+import ImagePreviewModal from "../components/ImagePreviewModal";
 
 const cardMotion = {
   hidden: { opacity: 0, y: 24 },
@@ -70,7 +68,7 @@ function MotionCard({ children, className = "", ...props }) {
 export default function HomePage({ onNavigateProjects, onScrollReady }) {
   const [typedName, setTypedName] = useState("");
   const [contactOpen, setContactOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [previewIndex, setPreviewIndex] = useState(null);
   const [snackbar, setSnackbar] = useState("");
   const [formState, setFormState] = useState({
     name: "",
@@ -78,8 +76,6 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
     subject: "",
     message: ""
   });
-
-  const heroPhotos = useMemo(() => [photos[0], photos[9], photos[18]], []);
 
   useEffect(() => {
     let index = 0;
@@ -100,32 +96,12 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
     }
   }, [onScrollReady]);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (lightboxIndex === null) {
-        return;
-      }
-      if (event.key === "Escape") {
-        setLightboxIndex(null);
-      }
-      if (event.key === "ArrowRight") {
-        setLightboxIndex((current) => (current + 1) % photos.length);
-      }
-      if (event.key === "ArrowLeft") {
-        setLightboxIndex((current) => (current - 1 + photos.length) % photos.length);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxIndex]);
-
   const currentPhoto = useMemo(() => {
-    if (lightboxIndex === null) {
+    if (previewIndex === null) {
       return null;
     }
-    return photos[lightboxIndex];
-  }, [lightboxIndex]);
+    return photos[previewIndex];
+  }, [previewIndex]);
 
   const handleCopyPhone = async () => {
     try {
@@ -182,8 +158,13 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
                 <Typography className="mini-heading">Current Focus</Typography>
                 <Typography>Modern web interfaces, AI-led products, and visual storytelling that feels crafted.</Typography>
               </Box>
-              <Box className="hero-mini-card hero-mini-card-accent">
-                <Typography className="mini-heading">Based In</Typography>
+              <Box className="hero-mini-card hero-mini-card-accent hero-mini-card-location">
+                <Stack direction="row" spacing={0.75} alignItems="center" className="mini-heading mini-heading-location">
+                  <MapPin size={14} />
+                  <Typography component="span" className="mini-heading-text">
+                    Based In
+                  </Typography>
+                </Stack>
                 <Typography>{personalInfo.location}</Typography>
               </Box>
             </Box>
@@ -205,21 +186,12 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
             transition={{ duration: 0.9, delay: 0.15 }}
           >
             <Box className="hero-rhythm-lines" />
-            <Box className="hero-stage-label">developer / photographer / builder</Box>
             <Box className="hero-stage-frame main-frame">
               <Avatar src={personalInfo.profileImage} alt={personalInfo.name} className="profile-avatar large" />
               <Box className="hero-stage-caption">
                 <Typography className="mini-heading">Portrait</Typography>
                 <Typography>{personalInfo.name}</Typography>
               </Box>
-            </Box>
-            <Box className="hero-stage-frame small-frame top-frame">
-              <img src={heroPhotos[1].src} alt={heroPhotos[1].title} />
-              <Typography>{heroPhotos[1].title}</Typography>
-            </Box>
-            <Box className="hero-stage-frame small-frame bottom-frame">
-              <img src={heroPhotos[2].src} alt={heroPhotos[2].title} />
-              <Typography>{heroPhotos[2].title}</Typography>
             </Box>
             <Box className="hero-stage-quote">
               <Typography className="mini-heading">Approach</Typography>
@@ -375,41 +347,7 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
             <Typography className="section-subtitle">{photographyDescription}</Typography>
           </Box>
 
-          <Box className="photo-showcase">
-            <motion.button
-              type="button"
-              className="photo-feature"
-              onClick={() => setLightboxIndex(0)}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <img src={heroPhotos[0].src} alt={heroPhotos[0].title} loading="lazy" />
-              <Box className="photo-feature-copy">
-                <Typography className="mini-heading">Featured Frame</Typography>
-                <Typography className="photo-feature-title">{heroPhotos[0].title}</Typography>
-              </Box>
-            </motion.button>
-            <Box className="masonry-grid editorial-masonry">
-              {photos.map((photo, index) => (
-                <motion.button
-                  type="button"
-                  key={photo.src}
-                  className="photo-card editorial-photo-card"
-                  onClick={() => setLightboxIndex(index)}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.45, delay: index * 0.015 }}
-                >
-                  <img src={photo.src} alt={photo.title} loading="lazy" />
-                  <Box className="photo-overlay editorial-photo-overlay">
-                    <Typography>{photo.title}</Typography>
-                  </Box>
-                </motion.button>
-              ))}
-            </Box>
-          </Box>
+          <PhotoCarousel photos={photos} onPhotoClick={setPreviewIndex} />
         </Box>
 
         <Box className="section-transition" aria-hidden="true" />
@@ -508,34 +446,16 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        open={lightboxIndex !== null}
-        onClose={() => setLightboxIndex(null)}
-        maxWidth="lg"
-        PaperProps={{ className: "lightbox-shell" }}
-      >
-        {currentPhoto && (
-          <>
-            <DialogTitle className="lightbox-title">
-              <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
-                <Typography>{currentPhoto.title}</Typography>
-                <Chip icon={<ImageIcon size={14} />} label={`${lightboxIndex + 1} / ${photos.length}`} size="small" />
-              </Stack>
-            </DialogTitle>
-            <DialogContent>
-              <Box className="lightbox-content-wrap">
-                <IconButton onClick={() => setLightboxIndex((lightboxIndex - 1 + photos.length) % photos.length)}>
-                  <ChevronLeft />
-                </IconButton>
-                <img src={currentPhoto.src} alt={currentPhoto.title} className="lightbox-image" />
-                <IconButton onClick={() => setLightboxIndex((lightboxIndex + 1) % photos.length)}>
-                  <ChevronRight />
-                </IconButton>
-              </Box>
-            </DialogContent>
-          </>
-        )}
-      </Dialog>
+      <ImagePreviewModal
+        open={previewIndex !== null}
+        src={currentPhoto?.src ?? ""}
+        title={currentPhoto?.title ?? ""}
+        index={previewIndex}
+        total={photos.length}
+        onPrev={() => setPreviewIndex((current) => (current - 1 + photos.length) % photos.length)}
+        onNext={() => setPreviewIndex((current) => (current + 1) % photos.length)}
+        onClose={() => setPreviewIndex(null)}
+      />
 
       <Snackbar open={Boolean(snackbar)} autoHideDuration={2500} onClose={() => setSnackbar("")}>
         <Alert severity="info" variant="filled" onClose={() => setSnackbar("")}>

@@ -5,6 +5,7 @@ import {
   CardContent,
   Chip,
   Container,
+  IconButton,
   Stack,
   Typography
 } from "@mui/material";
@@ -25,7 +26,12 @@ export default function ProjectsPage({ onGoHome }) {
       <Container maxWidth="xl">
         <Box className="projects-hero projects-hero-editorial">
           <Box>
-            <Typography className="section-eyebrow">Projects</Typography>
+            <Box className="projects-kicker-row">
+              <IconButton className="projects-back-icon" onClick={onGoHome} aria-label="Back to home">
+                <ArrowLeft size={16} />
+              </IconButton>
+              <Typography className="section-eyebrow">Projects</Typography>
+            </Box>
             <Typography component="h1" className="section-title projects-title-editorial">
               Full collection of work across software, AI, and systems
             </Typography>
@@ -34,9 +40,6 @@ export default function ProjectsPage({ onGoHome }) {
             <Typography className="section-subtitle">
               Each card keeps the original portfolio content, but the presentation now feels more like a designed case-study board than a plain list.
             </Typography>
-            <Button startIcon={<ArrowLeft size={18} />} variant="outlined" onClick={onGoHome}>
-              Back to Home
-            </Button>
           </Box>
         </Box>
 
