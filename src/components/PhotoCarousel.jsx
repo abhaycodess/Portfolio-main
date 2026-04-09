@@ -7,12 +7,21 @@ import styles from "./PhotoCarousel.module.css";
 const DESKTOP_CARD_WIDTH = 420;
 const TABLET_CARD_WIDTH = 340;
 const MOBILE_CARD_WIDTH = 260;
+const MOBILE_MIN_CARD_WIDTH = 220;
+const MOBILE_MAX_CARD_WIDTH = 300;
+const MOBILE_CARD_ASPECT_RATIO = 0.623;
 const DESKTOP_GAP = 44;
 const TABLET_GAP = 34;
 const MOBILE_GAP = 24;
+const MOBILE_MIN_GAP = 14;
+const MOBILE_MAX_GAP = 26;
 const DESKTOP_BREAKPOINT = 960;
 const TABLET_BREAKPOINT = 640;
 const MAX_VISIBLE_OFFSET = 4;
+
+const DESKTOP_CARD_HEIGHT = 262;
+const TABLET_CARD_HEIGHT = 212;
+const MOBILE_CARD_HEIGHT = 162;
 
 function clampIndex(index, total) {
   return Math.max(0, Math.min(index, total - 1));
@@ -42,7 +51,8 @@ function getCardWidth() {
   }
   const width = window.innerWidth;
   if (width < TABLET_BREAKPOINT) {
-    return MOBILE_CARD_WIDTH;
+    const dynamicWidth = Math.round(width * 0.72);
+    return Math.max(MOBILE_MIN_CARD_WIDTH, Math.min(MOBILE_MAX_CARD_WIDTH, dynamicWidth));
   }
   if (width < DESKTOP_BREAKPOINT) {
     return TABLET_CARD_WIDTH;
@@ -56,12 +66,27 @@ function getCardGap() {
   }
   const width = window.innerWidth;
   if (width < TABLET_BREAKPOINT) {
-    return MOBILE_GAP;
+    const dynamicGap = Math.round(width * 0.05);
+    return Math.max(MOBILE_MIN_GAP, Math.min(MOBILE_MAX_GAP, dynamicGap));
   }
   if (width < DESKTOP_BREAKPOINT) {
     return TABLET_GAP;
   }
   return DESKTOP_GAP;
+}
+
+function getCardHeight(cardWidth) {
+  if (typeof window === "undefined") {
+    return DESKTOP_CARD_HEIGHT;
+  }
+  const width = window.innerWidth;
+  if (width < TABLET_BREAKPOINT) {
+    return Math.round(cardWidth * MOBILE_CARD_ASPECT_RATIO);
+  }
+  if (width < DESKTOP_BREAKPOINT) {
+    return TABLET_CARD_HEIGHT;
+  }
+  return DESKTOP_CARD_HEIGHT;
 }
 
 export default function PhotoCarousel({ photos, onPhotoClick, className = "", initialIndex = null }) {
@@ -74,11 +99,14 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
     return total > 0 ? Math.floor(Math.random() * total) : 0;
   });
   const [cardWidth, setCardWidth] = useState(() => getCardWidth());
+  const [cardHeight, setCardHeight] = useState(() => getCardHeight(getCardWidth()));
   const [cardGap, setCardGap] = useState(() => getCardGap());
   const canNavigate = total > 1;
 
   const updateSizing = () => {
-    setCardWidth(getCardWidth());
+    const nextWidth = getCardWidth();
+    setCardWidth(nextWidth);
+    setCardHeight(getCardHeight(nextWidth));
     setCardGap(getCardGap());
   };
 
@@ -157,6 +185,7 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
           style={{
             "--active-index": activeIndex,
             "--card-width": `${cardWidth}px`,
+            "--card-height": `${cardHeight}px`,
             "--card-gap": `${cardGap}px`
           }}
           drag="x"
