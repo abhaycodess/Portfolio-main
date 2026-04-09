@@ -347,6 +347,13 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
             <Typography className="section-subtitle">{photographyDescription}</Typography>
           </Box>
 
+          <Box className="carousel-attention-note" role="note" aria-label="Photography viewing tip">
+            <Typography className="carousel-attention-kicker">Viewer Advisory</Typography>
+            <Typography className="carousel-attention-text">
+              Mobile is cute. Desktop is where these frames stop being photos and start being cinema.
+            </Typography>
+          </Box>
+
           <PhotoCarousel photos={photos} onPhotoClick={setPreviewIndex} />
         </Box>
 
