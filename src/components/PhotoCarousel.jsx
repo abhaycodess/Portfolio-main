@@ -17,6 +17,7 @@ const MOBILE_MIN_GAP = 14;
 const MOBILE_MAX_GAP = 26;
 const DESKTOP_BREAKPOINT = 960;
 const TABLET_BREAKPOINT = 640;
+const MOBILE_LAYOUT_BREAKPOINT = 640;
 const MAX_VISIBLE_OFFSET = 4;
 
 const DESKTOP_CARD_HEIGHT = 262;
@@ -101,13 +102,20 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
   const [cardWidth, setCardWidth] = useState(() => getCardWidth());
   const [cardHeight, setCardHeight] = useState(() => getCardHeight(getCardWidth()));
   const [cardGap, setCardGap] = useState(() => getCardGap());
+  const [isMobileLayout, setIsMobileLayout] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < MOBILE_LAYOUT_BREAKPOINT : false
+  );
   const canNavigate = total > 1;
 
   const updateSizing = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const nextWidth = getCardWidth();
     setCardWidth(nextWidth);
     setCardHeight(getCardHeight(nextWidth));
     setCardGap(getCardGap());
+    setIsMobileLayout(window.innerWidth < MOBILE_LAYOUT_BREAKPOINT);
   };
 
   const next = () => {
@@ -153,12 +161,90 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
   }, [total]);
 
   const handleCardClick = (index) => {
-    if (index === activeIndex) {
-      onPhotoClick(index);
-      return;
-    }
     setActiveIndex(index);
   };
+
+  if (isMobileLayout) {
+    const mobileActive = shuffledPhotos[activeIndex]?.photo;
+
+    return (
+      <Box className={`${styles.carouselSection} ${styles.mobileSection} ${className}`.trim()}>
+        <Box className={styles.mobileShell}>
+          <Box className={styles.mobileFrame}>
+            <IconButton
+              className={`${styles.navButton} ${styles.mobileNavButton} ${styles.navLeft}`}
+              onClick={prev}
+              aria-label="Previous photo"
+              disabled={!canNavigate}
+            >
+              <ChevronLeft size={18} />
+            </IconButton>
+
+            <motion.button
+              type="button"
+              className={styles.mobilePhotoButton}
+              onClick={() => onPhotoClick(shuffledPhotos[activeIndex]?.originalIndex ?? activeIndex)}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.08}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -45 || info.velocity.x < -280) {
+                  next();
+                } else if (info.offset.x > 45 || info.velocity.x > 280) {
+                  prev();
+                }
+              }}
+            >
+              <motion.img
+                key={mobileActive?.optimizedSrc ?? mobileActive?.src}
+                src={mobileActive?.optimizedSrc ?? mobileActive?.src}
+                srcSet={
+                  mobileActive?.mobileSrc && mobileActive?.optimizedSrc
+                    ? `${mobileActive.mobileSrc} 720w, ${mobileActive.optimizedSrc} 1280w`
+                    : undefined
+                }
+                sizes="(max-width: 639px) 92vw, 560px"
+                alt={mobileActive?.title ?? "Photography"}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="high"
+                initial={{ opacity: 0.45, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35 }}
+              />
+            </motion.button>
+
+            <IconButton
+              className={`${styles.navButton} ${styles.mobileNavButton} ${styles.navRight}`}
+              onClick={next}
+              aria-label="Next photo"
+              disabled={!canNavigate}
+            >
+              <ChevronRight size={18} />
+            </IconButton>
+          </Box>
+
+          <Box className={styles.mobileMeta}>
+            <span className={styles.metaIndex}>{String(activeIndex + 1).padStart(2, "0")}</span>
+            <span className={styles.metaDivider} />
+            <span className={styles.metaTitle}>{mobileActive?.title ?? "Photography"}</span>
+          </Box>
+
+          <Box className={styles.mobileDots}>
+            {shuffledPhotos.map((item, index) => (
+              <button
+                key={`${item.photo.src}-dot`}
+                type="button"
+                className={`${styles.mobileDot} ${index === activeIndex ? styles.mobileDotActive : ""}`.trim()}
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Go to photo ${index + 1}`}
+              />
+            ))}
+          </Box>
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box className={`${styles.carouselSection} ${className}`.trim()}>
@@ -205,6 +291,7 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
             const distance = Math.abs(offset);
             const isActive = index === activeIndex;
             const isVisible = distance <= MAX_VISIBLE_OFFSET;
+            const shouldLoadImage = distance <= 2;
             const depthScale =
               distance === 0 ? 1.25 : distance === 1 ? 0.9 : distance === 2 ? 0.78 : distance === 3 ? 0.66 : 0.56;
             const opacity =
@@ -246,7 +333,23 @@ export default function PhotoCarousel({ photos, onPhotoClick, className = "", in
                   pointerEvents: isVisible ? "auto" : "none"
                 }}
               >
-                <img src={photo.src} alt={photo.title} loading="lazy" />
+                {shouldLoadImage ? (
+                  <img
+                    src={photo.optimizedSrc ?? photo.src}
+                    srcSet={
+                      photo.mobileSrc && photo.optimizedSrc
+                        ? `${photo.mobileSrc} 720w, ${photo.optimizedSrc} 1280w`
+                        : undefined
+                    }
+                    sizes="(max-width: 639px) 72vw, (max-width: 959px) 340px, 420px"
+                    alt={photo.title}
+                    loading={isActive ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchPriority={isActive ? "high" : "auto"}
+                  />
+                ) : (
+                  <Box className={styles.cardPlaceholder} />
+                )}
               </motion.button>
             );
           })}

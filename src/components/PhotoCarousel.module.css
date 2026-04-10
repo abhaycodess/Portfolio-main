@@ -62,13 +62,21 @@
   display: block;
 }
 
+.cardPlaceholder {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    radial-gradient(circle at 20% 20%, rgba(255, 141, 93, 0.22), rgba(255, 141, 93, 0));
+}
+
 .active {
   box-shadow: 0 30px 80px rgba(255, 141, 93, 0.35);
 }
 
 .navButton {
   position: absolute !important;
-  top: 58%;
+  top: 61%;
   transform: translateY(-50%);
   width: 46px !important;
   height: 46px !important;
@@ -132,6 +140,87 @@
   text-overflow: ellipsis;
 }
 
+.mobileSection {
+  margin-left: 0;
+  width: 100%;
+  padding: 6px 0 8px;
+}
+
+.mobileShell {
+  width: 100%;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.mobileFrame {
+  position: relative;
+  border-radius: 20px;
+  padding: 0.55rem;
+  border: 1px solid rgba(244, 239, 232, 0.16);
+  background: rgba(17, 17, 17, 0.42);
+  box-shadow: 0 18px 36px rgba(8, 8, 8, 0.28);
+}
+
+.mobilePhotoButton {
+  width: 100%;
+  border: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 0;
+  background: transparent;
+  display: block;
+}
+
+.mobilePhotoButton img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.mobileNavButton {
+  top: 56%;
+  transform: translateY(-50%);
+  width: 34px !important;
+  height: 34px !important;
+  background: rgba(12, 12, 12, 0.54) !important;
+}
+
+.mobileMeta {
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 96%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 239, 232, 0.14);
+  background: rgba(16, 16, 16, 0.32);
+  color: #f4efe8;
+}
+
+.mobileDots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.34rem;
+}
+
+.mobileDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  background: rgba(244, 239, 232, 0.34);
+}
+
+.mobileDotActive {
+  width: 18px;
+  background: linear-gradient(90deg, rgba(255, 197, 130, 0.95), rgba(255, 141, 93, 0.98));
+}
+
 @media (max-width: 959px) {
   .carouselSection {
     --stage-anchor-x: 40%;
@@ -162,15 +251,15 @@
   .navButton {
     width: 38px !important;
     height: 38px !important;
-    top: calc(50% + 12px);
+    top: calc(50% + 18px);
   }
 
   .navLeft {
-    left: 10px;
+    left: 12px;
   }
 
   .navRight {
-    right: 10px;
+    right: 12px;
   }
 
   .activeMeta {
@@ -181,6 +270,15 @@
 
   .metaTitle {
     font-size: 0.73rem;
+  }
+
+  .mobileFrame {
+    border-radius: 16px;
+    padding: 0.45rem;
+  }
+
+  .mobilePhotoButton {
+    border-radius: 12px;
   }
 
 }

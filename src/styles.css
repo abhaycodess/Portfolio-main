@@ -147,6 +147,32 @@ html[data-theme="dark"] .topbar {
   display: inline-flex !important;
 }
 
+.mobile-menu-button {
+  border: 1px solid rgba(23, 23, 20, 0.12) !important;
+  background: linear-gradient(135deg, rgba(255, 205, 143, 0.66), rgba(217, 93, 57, 0.28)) !important;
+}
+
+.mobile-menu-button:hover {
+  background: linear-gradient(135deg, rgba(255, 205, 143, 0.9), rgba(217, 93, 57, 0.44)) !important;
+}
+
+html[data-theme="dark"] .mobile-menu-button {
+  border-color: rgba(244, 239, 232, 0.18) !important;
+  background: linear-gradient(135deg, rgba(255, 155, 113, 0.34), rgba(72, 49, 36, 0.92)) !important;
+}
+
+html[data-theme="dark"] .mobile-menu-button:hover {
+  background: linear-gradient(135deg, rgba(255, 173, 136, 0.44), rgba(97, 64, 46, 0.96)) !important;
+}
+
+.mobile-back-button {
+  border: 1px solid rgba(23, 23, 20, 0.12) !important;
+}
+
+html[data-theme="dark"] .mobile-back-button {
+  border-color: rgba(244, 239, 232, 0.18) !important;
+}
+
 .page-shell {
   position: relative;
   z-index: 1;
@@ -1123,14 +1149,42 @@ html[data-theme="dark"] .footer-bar {
 .dialog-shell,
 .mobile-drawer {
   border: 1px solid rgba(23, 23, 20, 0.08);
-  background: rgba(255, 252, 247, 0.92) !important;
+  background:
+    radial-gradient(circle at 10% -20%, rgba(255, 205, 143, 0.35), rgba(255, 205, 143, 0)),
+    linear-gradient(165deg, rgba(255, 252, 247, 0.98), rgba(255, 244, 229, 0.95)) !important;
   backdrop-filter: blur(22px);
 }
 
 html[data-theme="dark"] .dialog-shell,
 html[data-theme="dark"] .mobile-drawer {
   border-color: rgba(244, 239, 232, 0.12);
-  background: rgba(18, 18, 18, 0.92) !important;
+  background:
+    radial-gradient(circle at 15% -18%, rgba(255, 155, 113, 0.24), rgba(255, 155, 113, 0)),
+    linear-gradient(165deg, rgba(18, 18, 18, 0.95), rgba(34, 27, 23, 0.94)) !important;
+}
+
+.mobile-drawer .MuiListItemButton-root {
+  border-radius: 14px;
+}
+
+.mobile-drawer .MuiListItemButton-root + .MuiListItemButton-root {
+  margin-top: 0.2rem;
+}
+
+.mobile-resume-toggle {
+  margin-top: 0.28rem;
+  border: 1px solid rgba(23, 23, 20, 0.1);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+html[data-theme="dark"] .mobile-resume-toggle {
+  border-color: rgba(244, 239, 232, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mobile-resume-item {
+  padding-left: 1.6rem !important;
+  margin-top: 0.1rem;
 }
 
 @media (min-width: 980px) {

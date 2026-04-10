@@ -2,7 +2,7 @@ const assetBase = import.meta.env.BASE_URL;
 
 export const personalInfo = {
   name: "Abhay Raj Dwivedi",
-  role: "Creative Developer, AI Builder, and Photographer",
+  role: "Creative Developer and Photographer",
   heroIntro: "Welcome folks,",
   heroLead: "This is",
   statement:
@@ -176,6 +176,8 @@ const photoTitles = [
 
 export const photos = photoFiles.map((file, index) => ({
   src: `${assetBase}Photos-1-001/${file}`,
+  optimizedSrc: `${assetBase}Photos-1-001/optimized/${file.replace(/\.[^.]+$/, ".webp")}`,
+  mobileSrc: `${assetBase}Photos-1-001/optimized/mobile/${file.replace(/\.[^.]+$/, ".webp")}`,
   title: photoTitles[index]
 }));
 

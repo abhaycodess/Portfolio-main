@@ -455,7 +455,8 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
 
       <ImagePreviewModal
         open={previewIndex !== null}
-        src={currentPhoto?.src ?? ""}
+        src={currentPhoto?.src ?? currentPhoto?.optimizedSrc ?? ""}
+        photo={currentPhoto}
         title={currentPhoto?.title ?? ""}
         index={previewIndex}
         total={photos.length}

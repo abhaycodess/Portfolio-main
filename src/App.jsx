@@ -3,6 +3,7 @@ import {
   AppBar,
   Box,
   Button,
+  Collapse,
   Container,
   CssBaseline,
   Drawer,
@@ -20,7 +21,7 @@ import {
   createTheme
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu as MenuIcon, MoonStar, SunMedium } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Menu as MenuIcon, MoonStar, SunMedium } from "lucide-react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { personalInfo } from "./data/portfolioData";
 import HomePage from "./sections/HomePage";
@@ -40,6 +41,7 @@ export default function App() {
   const [mode, setMode] = useState(() => localStorage.getItem("portfolio-theme") || "light");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [resumeAnchor, setResumeAnchor] = useState(null);
+  const [mobileResumeOpen, setMobileResumeOpen] = useState(false);
 
   const theme = useMemo(
     () =>
@@ -94,6 +96,10 @@ export default function App() {
     localStorage.setItem("portfolio-theme", mode);
   }, [mode]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
+
   const scrollToSection = useCallback((sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -104,6 +110,7 @@ export default function App() {
   const navigateSection = useCallback(
     (sectionId) => {
       setDrawerOpen(false);
+      setMobileResumeOpen(false);
       if (location.pathname !== "/") {
         sessionStorage.setItem("pending-section", sectionId);
         navigate("/");
@@ -157,10 +164,15 @@ export default function App() {
                 {navItems}
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
+                {location.pathname === "/projects" && (
+                  <IconButton color="inherit" className="mobile-only mobile-back-button" onClick={() => navigate("/")}>
+                    <ArrowLeft size={20} />
+                  </IconButton>
+                )}
                 <IconButton color="inherit" onClick={() => setMode((current) => (current === "dark" ? "light" : "dark"))}>
                   {mode === "dark" ? <SunMedium size={20} /> : <MoonStar size={20} />}
                 </IconButton>
-                <IconButton color="inherit" className="mobile-only" onClick={() => setDrawerOpen(true)}>
+                <IconButton color="inherit" className="mobile-only mobile-menu-button" onClick={() => setDrawerOpen(true)}>
                   <MenuIcon size={20} />
                 </IconButton>
               </Stack>
@@ -187,26 +199,48 @@ export default function App() {
         <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)} PaperProps={{ className: "mobile-drawer" }}>
           <Box sx={{ width: 280, p: 2 }}>
             <List>
+              <ListItemButton
+                onClick={() => {
+                  if (location.pathname === "/projects") {
+                    navigate("/");
+                  }
+                  setDrawerOpen(false);
+                  setMobileResumeOpen(false);
+                }}
+              >
+                <ArrowLeft size={16} style={{ marginRight: 10 }} />
+                <ListItemText primary={location.pathname === "/projects" ? "Back to Home" : "Close Menu"} />
+              </ListItemButton>
               {sections.map((section) => (
                 <ListItemButton key={section.id} onClick={() => navigateSection(section.id)}>
                   <ListItemText primary={section.label} />
                 </ListItemButton>
               ))}
-              <ListItemButton onClick={() => { setDrawerOpen(false); navigate("/projects"); }}>
+              <ListItemButton onClick={() => { setDrawerOpen(false); setMobileResumeOpen(false); navigate("/projects"); }}>
                 <ListItemText primary="Projects" />
               </ListItemButton>
-              {personalInfo.resumes.map((resume) => (
-                <ListItemButton
-                  key={resume.label}
-                  component={Link}
-                  href={resume.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  underline="none"
-                >
-                  <ListItemText primary={resume.label} />
-                </ListItemButton>
-              ))}
+              <ListItemButton onClick={() => setMobileResumeOpen((open) => !open)} className="mobile-resume-toggle">
+                <ListItemText primary="Resume" />
+                {mobileResumeOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </ListItemButton>
+              <Collapse in={mobileResumeOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {personalInfo.resumes.map((resume) => (
+                    <ListItemButton
+                      key={resume.label}
+                      component={Link}
+                      href={resume.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      underline="none"
+                      className="mobile-resume-item"
+                      onClick={() => setDrawerOpen(false)}
+                    >
+                      <ListItemText primary={resume.label} />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Collapse>
             </List>
           </Box>
         </Drawer>
