@@ -1049,7 +1049,14 @@ html[data-theme="dark"] .projects-back-icon:hover {
 }
 
 .projects-title-editorial {
-  max-width: 12ch;
+  max-width: 24ch;
+  text-wrap: balance;
+  line-height: 1.08 !important;
+}
+
+.projects-title-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .project-card-editorial {
@@ -1235,6 +1242,16 @@ html[data-theme="dark"] .mobile-resume-toggle {
 
   .editorial-title {
     white-space: normal;
+  }
+
+  .projects-title-editorial {
+    font-size: clamp(1.55rem, 7.2vw, 2.15rem) !important;
+    line-height: 1.12 !important;
+    max-width: fit-content;
+  }
+
+  .projects-title-line {
+    white-space: nowrap;
   }
 
   .main-frame {

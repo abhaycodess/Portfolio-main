@@ -9,6 +9,7 @@ import {
   Stack,
   Typography
 } from "@mui/material";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { projects } from "../data/portfolioData";
@@ -20,7 +21,19 @@ const projectLensNotes = [
   "Keeps scope practical while still showing craftsmanship in architecture, UI, and delivery flow."
 ];
 
+const projectHeroQuotes = [
+  "Deployment is where every TODO turns into a personality test; these builds survived the mood swings.",
+  "Local success is cute, but post-deploy stability is the real flex every developer respects.",
+  "After deployment, users find edge cases faster than any test suite; these projects learned to handle it.",
+  "The code looked perfect before shipping, then production gave feedback in all caps; this is the improved version.",
+  "Anyone can ship v1, but surviving post-deploy fixes without rewriting everything is where the craft shows."
+];
+
 export default function ProjectsPage({ onGoHome }) {
+  const projectHeroQuote = useMemo(() => {
+    return projectHeroQuotes[Math.floor(Math.random() * projectHeroQuotes.length)];
+  }, []);
+
   return (
     <Box className="page-shell projects-shell editorial-shell">
       <Container maxWidth="xl">
@@ -33,13 +46,12 @@ export default function ProjectsPage({ onGoHome }) {
               <Typography className="section-eyebrow">Projects</Typography>
             </Box>
             <Typography component="h1" className="section-title projects-title-editorial">
-              Full collection of work across software, AI, and systems
+              <span className="projects-title-line">Projects that ship,</span>
+              <span className="projects-title-line">skills that hold up.</span>
             </Typography>
           </Box>
           <Box className="projects-hero-side">
-            <Typography className="section-subtitle">
-              Each card keeps the original portfolio content, but the presentation now feels more like a designed case-study board than a plain list.
-            </Typography>
+            <Typography className="section-subtitle">{projectHeroQuote}</Typography>
           </Box>
         </Box>
 
