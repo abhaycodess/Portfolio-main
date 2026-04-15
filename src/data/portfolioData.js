@@ -72,26 +72,39 @@ export const strengths = [
 ];
 
 export const featuredProject = {
-  title: "Naagrik",
+  title: "Unlazy - Learning OS",
   eyebrow: "Featured Project",
-  subtitle: "Civic Issue Reporting and Citizen Engagement Platform",
+  subtitle: "A modern, open-source OS for learning, productivity, and digital wellness.",
   description:
-    "Naagrik is a civic issue reporting platform that helps citizens raise local problems, upload evidence, and track progress with clear public visibility and accountability workflows.",
-  stack: ["React", "Vite", "TailwindCSS", "Firebase Auth", "Firestore", "Firebase Storage"],
+    "Unlazy - Learning OS is a full-stack, open-source platform designed to help students and self-learners organize, track, and optimize their learning journey. It features a modular dashboard, spaced repetition, habit tracking, and a distraction-free interface. Built for the web, it blends productivity, digital wellness, and community-driven features to help you learn smarter, not harder.",
+  stack: ["React", "Node.js", "MongoDB", "Express", "Vite", "TailwindCSS"],
   details: [
     {
       label: "Key Features",
-      value: "Issue reporting with images and location, draft and live publishing, dashboard tracking, profile verification, moderation-ready workflows"
+      value: "Modular dashboard, spaced repetition, habit tracking, distraction-free mode, open-source, community-driven, and digital wellness tools."
     },
     {
       label: "Technologies",
-      value: "React 18, Vite, TailwindCSS, React Router, Firebase Authentication, Firestore, Firebase Storage"
+      value: "React, Node.js, Express, MongoDB, Vite, TailwindCSS, and more."
+    },
+    {
+      label: "View Live",
+      value: "https://unlazy-rho.vercel.app/"
     }
   ],
-  link: "https://github.com/abhaycodess/-Major-Project"
+  link: "https://github.com/abhaycodess/Learning-OS#learning-os---current-state-and-app-flow"
 };
 
 export const projects = [
+  {
+    title: "Unlazy - Learning OS",
+    description:
+      "A modern, open-source OS for learning, productivity, and digital wellness. Features a modular dashboard, spaced repetition, habit tracking, and a distraction-free interface for smarter learning.",
+    tech: ["React", "Node.js", "MongoDB", "Express", "Vite", "TailwindCSS"],
+    link: "https://github.com/abhaycodess/Learning-OS#learning-os---current-state-and-app-flow",
+    live: "https://unlazy-rho.vercel.app/",
+    category: "Full Stack"
+  },
   {
     title: "Naagrik",
     description:

@@ -318,15 +318,27 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
                 </Box>
 
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ mt: 4 }}>
-                  <Button
-                    href={featuredProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="contained"
-                    endIcon={<ExternalLink size={18} />}
-                  >
-                    View on GitHub
-                  </Button>
+                  {featuredProject.title === "Unlazy - Learning OS" && featuredProject.details.find(d => d.label === "View Live") ? (
+                    <Button
+                      href={featuredProject.details.find(d => d.label === "View Live").value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      endIcon={<ExternalLink size={18} />}
+                    >
+                      View Live
+                    </Button>
+                  ) : (
+                    <Button
+                      href={featuredProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      endIcon={<ExternalLink size={18} />}
+                    >
+                      View on GitHub
+                    </Button>
+                  )}
                   <Button variant="outlined" onClick={onNavigateProjects}>
                     See More Projects
                   </Button>

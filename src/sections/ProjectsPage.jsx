@@ -92,9 +92,20 @@ export default function ProjectsPage({ onGoHome }) {
                         <Typography>{project.tech.length} tools</Typography>
                       </Box>
                     </Box>
-                    <Button href={project.link} target="_blank" rel="noopener noreferrer" variant="contained" endIcon={<ExternalLink size={18} />}>
-                      Open GitHub
-                    </Button>
+                    {project.title === "Unlazy - Learning OS" ? (
+                      <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+                        <Button href={project.live} target="_blank" rel="noopener noreferrer" variant="contained" color="success" endIcon={<ExternalLink size={18} />}> 
+                          View Live
+                        </Button>
+                        <Button href={project.link} target="_blank" rel="noopener noreferrer" variant="outlined" endIcon={<ExternalLink size={18} />}> 
+                          View on GitHub
+                        </Button>
+                      </Stack>
+                    ) : (
+                      <Button href={project.link} target="_blank" rel="noopener noreferrer" variant="contained" endIcon={<ExternalLink size={18} />}> 
+                        Open GitHub
+                      </Button>
+                    )}
                   </Stack>
                 </Box>
               </CardContent>
