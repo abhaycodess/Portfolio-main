@@ -181,23 +181,51 @@ export default function App() {
           </Container>
         </AppBar>
 
-        {/* Resume Dropdown: View or Download (Redesigned) */}
         <Menu
           anchorEl={resumeAnchor}
           open={Boolean(resumeAnchor)}
           onClose={() => setResumeAnchor(null)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
           PaperProps={{
+            elevation: 0,
             sx: {
+              mt: 2,
               minWidth: 180,
-              p: 1.5,
+              width: 192,
               borderRadius: 3,
-              boxShadow: 6,
-              background: (theme) => theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #18130f 80%, #2a1a13 100%)'
-                : 'linear-gradient(135deg, #fff8f2 80%, #f6e7d7 100%)',
+              p: 0.5,
+              boxShadow: 24,
+              border: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '1.5px solid rgba(63,63,70,0.32)'
+                  : '1.5px solid rgba(255,255,255,0.20)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? 'rgba(24,24,27,0.80)'
+                  : 'rgba(255,255,255,0.80)',
+              backdropFilter: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? 'blur(16px)'
+                  : 'blur(8px)',
+              transition: 'all 150ms cubic-bezier(.4,0,.2,1)',
+              animation: 'resumeDropdownFadeIn 150ms cubic-bezier(.4,0,.2,1)'
+            }
+          }}
+          MenuListProps={{
+            sx: {
+              p: 0,
             }
           }}
         >
+          <style>
+            {`
+              @keyframes resumeDropdownFadeIn {
+                0% { opacity: 0; transform: scale(0.95); }
+                100% { opacity: 1; transform: scale(1); }
+              }
+            `}
+          </style>
           <MenuItem
             component={Link}
             href={personalInfo.resumes[0].href}
@@ -206,19 +234,30 @@ export default function App() {
             underline="none"
             onClick={() => setResumeAnchor(null)}
             sx={{
-              borderRadius: 2,
-              mb: 1,
-              px: 2.5,
-              py: 1.2,
-              fontWeight: 700,
-              fontSize: '1.05rem',
-              letterSpacing: '0.01em',
+              width: '100%',
+              px: 4,
+              py: 2,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
+              borderRadius: 3,
+              fontSize: '0.95rem',
+              color: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '#e4e4e7'
+                  : '#374151',
+              fontWeight: 500,
+              transition: 'all 150ms',
               '&:hover': {
-                background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(39,39,42,0.95)'
+                    : 'rgba(0,0,0,0.05)'
               }
             }}
           >
-            View Resume
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M17.5 6.5 6.5 17.5"/></svg>
+            <span>View Resume</span>
           </MenuItem>
           <MenuItem
             component={Link}
@@ -227,18 +266,30 @@ export default function App() {
             underline="none"
             onClick={() => setResumeAnchor(null)}
             sx={{
-              borderRadius: 2,
-              px: 2.5,
-              py: 1.2,
-              fontWeight: 700,
-              fontSize: '1.05rem',
-              letterSpacing: '0.01em',
+              width: '100%',
+              px: 4,
+              py: 2,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
+              borderRadius: 3,
+              fontSize: '0.95rem',
+              color: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '#e4e4e7'
+                  : '#374151',
+              fontWeight: 500,
+              transition: 'all 150ms',
               '&:hover': {
-                background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(39,39,42,0.95)'
+                    : 'rgba(0,0,0,0.05)'
               }
             }}
           >
-            Download Resume
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Download Resume</span>
           </MenuItem>
         </Menu>
 
