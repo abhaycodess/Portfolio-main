@@ -181,8 +181,23 @@ export default function App() {
           </Container>
         </AppBar>
 
-        {/* Resume Dropdown: View or Download */}
-        <Menu anchorEl={resumeAnchor} open={Boolean(resumeAnchor)} onClose={() => setResumeAnchor(null)}>
+        {/* Resume Dropdown: View or Download (Redesigned) */}
+        <Menu
+          anchorEl={resumeAnchor}
+          open={Boolean(resumeAnchor)}
+          onClose={() => setResumeAnchor(null)}
+          PaperProps={{
+            sx: {
+              minWidth: 180,
+              p: 1.5,
+              borderRadius: 3,
+              boxShadow: 6,
+              background: (theme) => theme.palette.mode === 'dark'
+                ? 'linear-gradient(135deg, #18130f 80%, #2a1a13 100%)'
+                : 'linear-gradient(135deg, #fff8f2 80%, #f6e7d7 100%)',
+            }
+          }}
+        >
           <MenuItem
             component={Link}
             href={personalInfo.resumes[0].href}
@@ -190,6 +205,18 @@ export default function App() {
             rel="noopener noreferrer"
             underline="none"
             onClick={() => setResumeAnchor(null)}
+            sx={{
+              borderRadius: 2,
+              mb: 1,
+              px: 2.5,
+              py: 1.2,
+              fontWeight: 700,
+              fontSize: '1.05rem',
+              letterSpacing: '0.01em',
+              '&:hover': {
+                background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+              }
+            }}
           >
             View Resume
           </MenuItem>
@@ -199,6 +226,17 @@ export default function App() {
             download
             underline="none"
             onClick={() => setResumeAnchor(null)}
+            sx={{
+              borderRadius: 2,
+              px: 2.5,
+              py: 1.2,
+              fontWeight: 700,
+              fontSize: '1.05rem',
+              letterSpacing: '0.01em',
+              '&:hover': {
+                background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+              }
+            }}
           >
             Download Resume
           </MenuItem>
@@ -241,6 +279,18 @@ export default function App() {
                     underline="none"
                     className="mobile-resume-item"
                     onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      borderRadius: 2,
+                      mb: 1,
+                      px: 2.5,
+                      py: 1.2,
+                      fontWeight: 700,
+                      fontSize: '1.05rem',
+                      letterSpacing: '0.01em',
+                      '&:hover': {
+                        background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+                      }
+                    }}
                   >
                     <ListItemText primary="View Resume" />
                   </ListItemButton>
@@ -251,6 +301,17 @@ export default function App() {
                     underline="none"
                     className="mobile-resume-item"
                     onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      borderRadius: 2,
+                      px: 2.5,
+                      py: 1.2,
+                      fontWeight: 700,
+                      fontSize: '1.05rem',
+                      letterSpacing: '0.01em',
+                      '&:hover': {
+                        background: (theme) => theme.palette.mode === 'dark' ? '#2a1a13' : '#f6e7d7',
+                      }
+                    }}
                   >
                     <ListItemText primary="Download Resume" />
                   </ListItemButton>
