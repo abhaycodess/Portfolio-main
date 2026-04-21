@@ -18,8 +18,7 @@ export const personalInfo = {
   phone: "+91 6386583143",
   profileImage: `${assetBase}profile-photo.jpg`,
   resumes: [
-    { label: "Tech Resume", href: `${assetBase}assets/resume.pdf` },
-    { label: "Non-Tech Resume", href: `${assetBase}assets/non-tech-resume.pdf` }
+    { label: "Resume", href: `${assetBase}resume.pdf` }
   ]
 };
 

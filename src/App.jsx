@@ -147,6 +147,7 @@ export default function App() {
   );
 
   return (
+
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box className={`app-root ${mode}`}>
@@ -180,20 +181,27 @@ export default function App() {
           </Container>
         </AppBar>
 
+        {/* Resume Dropdown: View or Download */}
         <Menu anchorEl={resumeAnchor} open={Boolean(resumeAnchor)} onClose={() => setResumeAnchor(null)}>
-          {personalInfo.resumes.map((resume) => (
-            <MenuItem
-              key={resume.label}
-              component={Link}
-              href={resume.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              onClick={() => setResumeAnchor(null)}
-            >
-              {resume.label}
-            </MenuItem>
-          ))}
+          <MenuItem
+            component={Link}
+            href={personalInfo.resumes[0].href}
+            target="_blank"
+            rel="noopener noreferrer"
+            underline="none"
+            onClick={() => setResumeAnchor(null)}
+          >
+            View Resume
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            href={personalInfo.resumes[0].href}
+            download
+            underline="none"
+            onClick={() => setResumeAnchor(null)}
+          >
+            Download Resume
+          </MenuItem>
         </Menu>
 
         <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)} PaperProps={{ className: "mobile-drawer" }}>
@@ -225,20 +233,27 @@ export default function App() {
               </ListItemButton>
               <Collapse in={mobileResumeOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {personalInfo.resumes.map((resume) => (
-                    <ListItemButton
-                      key={resume.label}
-                      component={Link}
-                      href={resume.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      underline="none"
-                      className="mobile-resume-item"
-                      onClick={() => setDrawerOpen(false)}
-                    >
-                      <ListItemText primary={resume.label} />
-                    </ListItemButton>
-                  ))}
+                  <ListItemButton
+                    component={Link}
+                    href={personalInfo.resumes[0].href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    underline="none"
+                    className="mobile-resume-item"
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    <ListItemText primary="View Resume" />
+                  </ListItemButton>
+                  <ListItemButton
+                    component={Link}
+                    href={personalInfo.resumes[0].href}
+                    download
+                    underline="none"
+                    className="mobile-resume-item"
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    <ListItemText primary="Download Resume" />
+                  </ListItemButton>
                 </List>
               </Collapse>
             </List>
