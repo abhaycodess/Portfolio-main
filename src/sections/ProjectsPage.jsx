@@ -99,7 +99,7 @@ export default function ProjectsPage({ onGoHome }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           variant="contained"
-                          color={project.title === "Unlazy - Learning OS" ? "success" : "primary"}
+                          color={project.liveButtonColor || "primary"}
                           endIcon={<ExternalLink size={18} />}
                         >
                           View Live

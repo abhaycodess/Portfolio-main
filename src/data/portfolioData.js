@@ -102,6 +102,7 @@ export const projects = [
     tech: ["React", "Node.js", "MongoDB", "Express", "Vite", "TailwindCSS"],
     link: "https://github.com/abhaycodess/Learning-OS#learning-os---current-state-and-app-flow",
     live: "https://unlazy-rho.vercel.app/",
+    liveButtonColor: "success",
     category: "Full Stack"
   },
   {
