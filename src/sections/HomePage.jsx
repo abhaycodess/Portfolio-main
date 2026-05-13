@@ -324,6 +324,7 @@ export default function HomePage({ onNavigateProjects, onScrollReady }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="contained"
+                      color="success"
                       endIcon={<ExternalLink size={18} />}
                     >
                       View Live
