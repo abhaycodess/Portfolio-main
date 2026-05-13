@@ -105,11 +105,12 @@ export const projects = [
     category: "Full Stack"
   },
   {
-    title: "Naagrik",
+    title: "Civic Issue App",
     description:
       "A civic issue reporting platform enabling citizens to raise and track local problems with transparency, verification-aware publishing, and public dashboard visibility.",
     tech: ["React", "Vite", "TailwindCSS", "Firebase Auth", "Firestore", "Firebase Storage"],
     link: "https://github.com/abhaycodess/-Major-Project",
+    live: "https://civic-issue-blue.vercel.app/login",
     category: "Full Stack"
   },
   {
